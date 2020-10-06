@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CatalogoVentaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Colour">
+          <Key>
+            <PropertyRef Name="ColourId" />
+          </Key>
+          <Property Name="ColourId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Colour" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductColour">
+          <Key>
+            <PropertyRef Name="ProductColourId" />
+          </Key>
+          <Property Name="ProductColourId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ColourId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductDescription">
+          <Key>
+            <PropertyRef Name="DescriptionId" />
+          </Key>
+          <Property Name="DescriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductWaist">
+          <Key>
+            <PropertyRef Name="ProductWaistId" />
+          </Key>
+          <Property Name="ProductWaistId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="WaistId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Waist">
+          <Key>
+            <PropertyRef Name="WaistId" />
+          </Key>
+          <Property Name="WaistId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Waist" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Categoria_Categoria">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Category1" Type="Self.Category" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColour_Colour">
+          <End Role="Colour" Type="Self.Colour" Multiplicity="1" />
+          <End Role="ProductColour" Type="Self.ProductColour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colour">
+              <PropertyRef Name="ColourId" />
+            </Principal>
+            <Dependent Role="ProductColour">
+              <PropertyRef Name="ColourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColour_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductColour" Type="Self.ProductColour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductColour">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoTalle_Producto">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductWaist" Type="Self.ProductWaist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductWaist">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoTalle_Talle">
+          <End Role="Waist" Type="Self.Waist" Multiplicity="1" />
+          <End Role="ProductWaist" Type="Self.ProductWaist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Waist">
+              <PropertyRef Name="WaistId" />
+            </Principal>
+            <Dependent Role="ProductWaist">
+              <PropertyRef Name="WaistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CatalogoVentaModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Colour" EntityType="Self.Colour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductColour" EntityType="Self.ProductColour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductDescription" EntityType="Self.ProductDescription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductWaist" EntityType="Self.ProductWaist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Waist" EntityType="Self.Waist" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Categoria_Categoria" Association="Self.FK_Categoria_Categoria">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColour_Colour" Association="Self.FK_ProductColour_Colour">
+            <End Role="Colour" EntitySet="Colour" />
+            <End Role="ProductColour" EntitySet="ProductColour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColour_Product" Association="Self.FK_ProductColour_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductColour" EntitySet="ProductColour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoTalle_Producto" Association="Self.FK_ProductoTalle_Producto">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductWaist" EntitySet="ProductWaist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoTalle_Talle" Association="Self.FK_ProductoTalle_Talle">
+            <End Role="Waist" EntitySet="Waist" />
+            <End Role="ProductWaist" EntitySet="ProductWaist" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CatalogoVentaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CatalogoVentaEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Category" EntityType="CatalogoVentaModel.Category" />
+          <EntitySet Name="Colour" EntityType="CatalogoVentaModel.Colour" />
+          <EntitySet Name="Product" EntityType="CatalogoVentaModel.Product" />
+          <EntitySet Name="ProductColour" EntityType="CatalogoVentaModel.ProductColour" />
+          <EntitySet Name="ProductDescription" EntityType="CatalogoVentaModel.ProductDescription" />
+          <EntitySet Name="ProductWaist" EntityType="CatalogoVentaModel.ProductWaist" />
+          <EntitySet Name="Waist" EntityType="CatalogoVentaModel.Waist" />
+          <AssociationSet Name="FK_Categoria_Categoria" Association="CatalogoVentaModel.FK_Categoria_Categoria">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria1" Association="CatalogoVentaModel.FK_Producto_Categoria1">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColour_Colour" Association="CatalogoVentaModel.FK_ProductColour_Colour">
+            <End Role="Colour" EntitySet="Colour" />
+            <End Role="ProductColour" EntitySet="ProductColour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColour_Product" Association="CatalogoVentaModel.FK_ProductColour_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductColour" EntitySet="ProductColour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoTalle_Producto1" Association="CatalogoVentaModel.FK_ProductoTalle_Producto1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductWaist" EntitySet="ProductWaist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoTalle_Talle1" Association="CatalogoVentaModel.FK_ProductoTalle_Talle1">
+            <End Role="Waist" EntitySet="Waist" />
+            <End Role="ProductWaist" EntitySet="ProductWaist" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category11" Relationship="CatalogoVentaModel.FK_Categoria_Categoria" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category2" Relationship="CatalogoVentaModel.FK_Categoria_Categoria" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="CatalogoVentaModel.FK_Producto_Categoria1" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Colour">
+          <Key>
+            <PropertyRef Name="ColourId" />
+          </Key>
+          <Property Name="ColourId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Colour1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductColour" Relationship="CatalogoVentaModel.FK_ProductColour_Colour" FromRole="Colour" ToRole="ProductColour" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <NavigationProperty Name="Category" Relationship="CatalogoVentaModel.FK_Producto_Categoria1" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ProductColour" Relationship="CatalogoVentaModel.FK_ProductColour_Product" FromRole="Product" ToRole="ProductColour" />
+          <NavigationProperty Name="ProductWaist" Relationship="CatalogoVentaModel.FK_ProductoTalle_Producto1" FromRole="Product" ToRole="ProductWaist" />
+        </EntityType>
+        <EntityType Name="ProductColour">
+          <Key>
+            <PropertyRef Name="ProductColourId" />
+          </Key>
+          <Property Name="ProductColourId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ColourId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Colour" Relationship="CatalogoVentaModel.FK_ProductColour_Colour" FromRole="ProductColour" ToRole="Colour" />
+          <NavigationProperty Name="Product" Relationship="CatalogoVentaModel.FK_ProductColour_Product" FromRole="ProductColour" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductDescription">
+          <Key>
+            <PropertyRef Name="DescriptionId" />
+          </Key>
+          <Property Name="DescriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductWaist">
+          <Key>
+            <PropertyRef Name="ProductWaistId" />
+          </Key>
+          <Property Name="ProductWaistId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="WaistId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="CatalogoVentaModel.FK_ProductoTalle_Producto1" FromRole="ProductWaist" ToRole="Product" />
+          <NavigationProperty Name="Waist" Relationship="CatalogoVentaModel.FK_ProductoTalle_Talle1" FromRole="ProductWaist" ToRole="Waist" />
+        </EntityType>
+        <EntityType Name="Waist">
+          <Key>
+            <PropertyRef Name="WaistId" />
+          </Key>
+          <Property Name="WaistId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Waist1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductWaist" Relationship="CatalogoVentaModel.FK_ProductoTalle_Talle1" FromRole="Waist" ToRole="ProductWaist" />
+        </EntityType>
+        <Association Name="FK_Categoria_Categoria">
+          <End Type="CatalogoVentaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.Category" Role="Category1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria1">
+          <End Type="CatalogoVentaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColour_Colour">
+          <End Type="CatalogoVentaModel.Colour" Role="Colour" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.ProductColour" Role="ProductColour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colour">
+              <PropertyRef Name="ColourId" />
+            </Principal>
+            <Dependent Role="ProductColour">
+              <PropertyRef Name="ColourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColour_Product">
+          <End Type="CatalogoVentaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.ProductColour" Role="ProductColour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductColour">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoTalle_Producto1">
+          <End Type="CatalogoVentaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.ProductWaist" Role="ProductWaist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductWaist">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoTalle_Talle1">
+          <End Type="CatalogoVentaModel.Waist" Role="Waist" Multiplicity="1" />
+          <End Type="CatalogoVentaModel.ProductWaist" Role="ProductWaist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Waist">
+              <PropertyRef Name="WaistId" />
+            </Principal>
+            <Dependent Role="ProductWaist">
+              <PropertyRef Name="WaistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CatalogoVentaModelStoreContainer" CdmEntityContainer="CatalogoVentaEntities" >
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Category1" ColumnName="Category" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colour">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.Colour">
+              <MappingFragment StoreEntitySet="Colour">
+                <ScalarProperty Name="Colour1" ColumnName="Colour" />
+                <ScalarProperty Name="ColourId" ColumnName="ColourId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductColour">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.ProductColour">
+              <MappingFragment StoreEntitySet="ProductColour">
+                <ScalarProperty Name="ColourId" ColumnName="ColourId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductColourId" ColumnName="ProductColourId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductDescription">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.ProductDescription">
+              <MappingFragment StoreEntitySet="ProductDescription">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DescriptionId" ColumnName="DescriptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductWaist">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.ProductWaist">
+              <MappingFragment StoreEntitySet="ProductWaist">
+                <ScalarProperty Name="WaistId" ColumnName="WaistId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductWaistId" ColumnName="ProductWaistId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Waist">
+            <EntityTypeMapping TypeName="CatalogoVentaModel.Waist">
+              <MappingFragment StoreEntitySet="Waist">
+                <ScalarProperty Name="Waist1" ColumnName="Waist" />
+                <ScalarProperty Name="WaistId" ColumnName="WaistId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

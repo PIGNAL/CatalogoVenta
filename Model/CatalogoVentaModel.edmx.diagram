@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="904200cdd5464a4699cfe6428c4f1eab" Name="Diagram1" ZoomLevel="82" >
+        <EntityTypeShape EntityType="CatalogoVentaModel.Category" Width="1.5" PointX="2.375" PointY="5.875" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.Colour" Width="1.5" PointX="9.5" PointY="3.5" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.Product" Width="1.5" PointX="4.625" PointY="5.75" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.ProductColour" Width="1.5" PointX="6.875" PointY="2.875" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.ProductDescription" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.ProductWaist" Width="1.5" PointX="6.875" PointY="5.875" />
+        <EntityTypeShape EntityType="CatalogoVentaModel.Waist" Width="1.5" PointX="4.625" PointY="8.5" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_Categoria_Categoria" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_Producto_Categoria1" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_ProductColour_Colour" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_ProductColour_Product" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_ProductoTalle_Producto1" />
+        <AssociationConnector Association="CatalogoVentaModel.FK_ProductoTalle_Talle1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
