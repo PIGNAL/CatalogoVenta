@@ -1,0 +1,33 @@
+<div *ngIf="loading" class="alert alert-info text-center" role="alert">
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+        <i class="fa fa-sync fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0"></p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger text-center" role="alert">
+    <h4 class="alert-heading">Error</h4>
+    <pre>
+        {{error | json}}
+    </pre>
+    <p class="mb-0"></p>
+</div>
+
+
+<div class="card-columns m-6" *ngIf="!loading && !error">
+    <div (click)="onProductClick(product.productId)" class="poster card animate__animated animate__fadeIn" *ngFor="let product of products">
+
+        <img [src]="product.image | picture" class="card-img-top img-fluid cursor">
+        <div class="card-body">
+            <h6 class="card-title text-primary">{{product.name | titlecase}}</h6>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-left">
+                    <i class="fas fa-tag"></i> Price: {{product.price | currency}}</li>
+                <li *ngIf="product.discount > 0" class="list-group-item text-left">Disctount: {{product.discount}} <i class="fas fa-percent"></i></li>
+                <li class="list-group-item card-text text-left">
+                    <i class="fas fa-barcode"></i> Code: {{product.barcode}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

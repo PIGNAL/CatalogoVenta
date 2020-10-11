@@ -6,27 +6,34 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ComponentsModule } from './components/components.module';
-
+import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/app.reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { EffectsArray } from './store/effects';
+import { ProductsModule } from './products/products.module';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ]),
-    ComponentsModule
+    AppRoutingModule,
+    ComponentsModule,
+    RouterModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot(EffectsArray),
+    ProductsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

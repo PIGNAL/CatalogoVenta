@@ -1,3 +1,7 @@
+using Data.Repositories;
+using Domain.Repositories;
+using Domain.Service;
+using Domain.Service.Contract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,13 @@ namespace CatalogoVenta
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // Add application services.
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
